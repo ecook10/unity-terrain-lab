@@ -1,6 +1,7 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Assets.IUnified;
 
 // auto-terrain from tutorial https://www.youtube.com/watch?v=64NblGkAabk&ab_channel=Brackeys
 
@@ -12,15 +13,33 @@ public class MeshGenerator : MonoBehaviour
     Vector3[] vertices;
     int[] triangles;
 
-    public int xSize = 20;
-    public int zSize = 20;
+    public int xSize = 100;
+    public int zSize = 100;
+
+    // height map stuff
+    public IList<HeightMap> heightMaps {
+        get {
+            if (_interfacesDelegate == null) {
+                _interfacesDelegate = new IUnifiedContainers<HeightMapContainer, HeightMap>(() => _heightMaps);
+            }
+            return _interfacesDelegate;
+        }
+        set {
+            _heightMaps = value.ToContainerList<HeightMapContainer, HeightMap>();
+        }
+    }
+    private IList<HeightMap> _interfacesDelegate;
+
+    [SerializeField]
+    private List<HeightMapContainer> _heightMaps;
+
 
     void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
-        StartCoroutine(CreateShape());
+        CreateShape();
     }
 
     private void  Update()
@@ -28,7 +47,7 @@ public class MeshGenerator : MonoBehaviour
         UpdateMesh();
     }
 
-    IEnumerator CreateShape()
+    private void CreateShape()
     {
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
 
@@ -37,6 +56,9 @@ public class MeshGenerator : MonoBehaviour
             for (int x = 0; x <= xSize; x++)
             {
                 float y = Mathf.PerlinNoise(x * .3f, z * .3f) * 2f;
+                foreach(var heightMap in heightMaps) {
+                    y += heightMap.getHeight(x,z);
+                }
                 vertices[i] = new Vector3(x, y, z);
                 i++;
             }
@@ -62,28 +84,9 @@ public class MeshGenerator : MonoBehaviour
 
                 vert++;
                 tris += 6;
-
-                yield return new WaitForSeconds(.05f);
             }
             vert++;
         }
-    }
-
-    void CreateQuad()
-    {
-        vertices = new Vector3[]
-        {
-            new Vector3(0,0,0),
-            new Vector3(0,0,1),
-            new Vector3(1,0,0),
-            new Vector3(1,0,1)
-        };
-
-        triangles = new int[]
-        {
-            0, 1, 2,
-            1, 3, 2
-        };
     }
 
     void UpdateMesh()
