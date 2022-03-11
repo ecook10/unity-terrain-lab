@@ -16,23 +16,27 @@ public class MeshGenerator : MonoBehaviour
     public int xSize = 100;
     public int zSize = 100;
 
+    // public HeightMap[] baseHeightMaps;
+    // public PeakMap[] peakMaps;
+
+    // public MapData[] mapData;
+
     // height map stuff
-    public IList<HeightMap> heightMaps {
-        get {
-            if (_interfacesDelegate == null) {
-                _interfacesDelegate = new IUnifiedContainers<HeightMapContainer, HeightMap>(() => _heightMaps);
-            }
-            return _interfacesDelegate;
-        }
-        set {
-            _heightMaps = value.ToContainerList<HeightMapContainer, HeightMap>();
-        }
-    }
-    private IList<HeightMap> _interfacesDelegate;
+    // public IList<HeightMap> heightMaps {
+    //     get {
+    //         if (_interfacesDelegate == null) {
+    //             _interfacesDelegate = new IUnifiedContainers<HeightMapContainer, HeightMap>(() => _heightMaps);
+    //         }
+    //         return _interfacesDelegate;
+    //     }
+    //     set {
+    //         _heightMaps = value.ToContainerList<HeightMapContainer, HeightMap>();
+    //     }
+    // }
+    // private IList<HeightMap> _interfacesDelegate;
 
-    [SerializeField]
-    private List<HeightMapContainer> _heightMaps;
-
+    // [SerializeField]
+    // private List<HeightMapContainer> _heightMaps;
 
     void Start()
     {
@@ -56,9 +60,9 @@ public class MeshGenerator : MonoBehaviour
             for (int x = 0; x <= xSize; x++)
             {
                 float y = Mathf.PerlinNoise(x * .3f, z * .3f) * 2f;
-                foreach(var heightMap in heightMaps) {
-                    y += heightMap.getHeight(x,z);
-                }
+                // foreach(var heightMap in heightMaps) {
+                //     y += heightMap.getHeight(x,z);
+                // }
                 vertices[i] = new Vector3(x, y, z);
                 i++;
             }
@@ -109,4 +113,10 @@ public class MeshGenerator : MonoBehaviour
             Gizmos.DrawSphere(vertices[i], .1f);
         }
     }
+}
+
+[System.Serializable]
+public struct MapData {
+    public int something;
+    public int somethingElse;
 }

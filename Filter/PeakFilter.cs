@@ -1,15 +1,16 @@
-using System;
 using UnityEngine;
+using System;
 
 // TODO implement more curves than just linear
 // TODO implement radial noise
-public class PeakMap : MonoBehaviour, HeightMap {
+[System.Serializable]
+public class PeakFilter : HeightFilter {
     public Vector2 position;
     public int radius;
     public int magnitude = 10;
 
-    public float getHeight(int x, int z) {
-        float d = Vector2.Distance(position, new Vector2(x,z));
+    public float getHeight(float x, float y) {
+        float d = Vector2.Distance(position, new Vector2(x,y));
         return (radius - Math.Min(radius, d)) / radius * magnitude;
     }
 }
