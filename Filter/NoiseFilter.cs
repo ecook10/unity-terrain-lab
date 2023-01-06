@@ -1,10 +1,11 @@
 using UnityEngine;
 
-[System.Serializable]
+[CreateAssetMenu(fileName = "NoiseFilter", menuName = "ScriptableObjects/NoiseFilter", order = 1)]
 public class NoiseFilter : HeightFilter {
-    public int x;
 
-    public float getHeight(float x, float y) {
-        return Mathf.PerlinNoise(x,y);
-    }
+  public int resolution;
+
+  public override float getHeight(float x, float y) {
+      return Mathf.PerlinNoise(x,y);
+  }
 }

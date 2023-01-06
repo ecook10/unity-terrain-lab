@@ -1,5 +1,5 @@
-using System;
+using UnityEngine;
 
-public interface HeightFilter {
-    public float getHeight(float x, float y);
+public abstract class HeightFilter : ScriptableObject {
+  public abstract float getHeight(float x, float y);
 }

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainDisplay : MonoBehaviour {
+public class TerrainMeshDisplay : MonoBehaviour {
 
-    public Terrain terrain;
+    public Renderer textureRender;
 
     public void Draw2DHeightMap(float[,] heightMap) {
         int width = heightMap.GetLength(0);
@@ -21,9 +21,9 @@ public class TerrainDisplay : MonoBehaviour {
         texture.SetPixels(colorMap);
         texture.Apply();
 
-        terrain.materialTemplate.mainTexture = texture;
-        terrain.terrainData.size = new Vector3(width, 1, height);
+        textureRender.sharedMaterial.mainTexture = texture;
+        textureRender.transform.localScale = new Vector3(width, 1, height);
 
-        Debug.Log("[TerrainDisplay] height map drawn");
+        Debug.Log("[TerrainMeshDisplay] height map drawn");
     }
 }

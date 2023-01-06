@@ -7,8 +7,10 @@ public class TerrainGenerator : MonoBehaviour {
     public int width;
     public int height;
     public float scale;
+    public int asdf;
 
-    public NoiseFilter[] noiseFilters;
+    // public NoiseFilter[] noiseFilters;
+    public HeightFilter[] heightFilters;
 
     public void GenerateTerrain() {
         float[,] heightMap = TerrainHeightMap.generateHeightMap(width, height, scale, AllFilters());
@@ -17,6 +19,6 @@ public class TerrainGenerator : MonoBehaviour {
     }
 
     public HeightFilter[] AllFilters() {
-        return noiseFilters;
+        return new HeightFilter[0];
     }
 }
