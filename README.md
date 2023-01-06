@@ -18,10 +18,10 @@ old stuff from a couple other tutorials - leaving around just for shits
 
 
 ## TODO
-1. get heightmap affecting the terrain *mesh*
-1. get `HeightFilter` and `PeakFilter` working really nicely + use on a few different terrains 
-2. new `SlopeFilter` for directional slopes - use for coast and/or cliffs
-3. model river / stream erosion (maybe determine path by pre-generated noisy sloping terrain?)
+1. get heightmap affecting the terrain heights (might just be able to simply use `Terrain.terrainData.SetHeight` - https://docs.unity3d.com/ScriptReference/TerrainData.SetHeights.html)
+2. get `HeightFilter` and `PeakFilter` working really nicely + use on a few different terrains 
+3. new `SlopeFilter` for directional slopes - use for coast and/or cliffs
+4. model river / stream erosion (maybe determine path by pre-generated noisy sloping terrain?)
 
 
 ## Resources
